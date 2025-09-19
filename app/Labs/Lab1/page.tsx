@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 export default function Lab1() {
   return (
     <div id="wd-lab1">
@@ -63,15 +64,15 @@ export default function Lab1() {
           <li>Crack eggs and put it in a bowl and mix it</li>
           <li>Chop the sujuk and put in pan</li>
           <li>Flip the sujuk, then put stirred up eggs in pan</li>
-          <li>Wait until it's kind of cooked on the bottom and flip it</li>
-          <li>Let it cook for a little and it's finished</li>
+          <li>Wait until it&apos;s kind of cooked on the bottom and flip it</li>
+          <li>Let it cook for a little and it&apos;s finished</li>
         </ol>
         <h5>Unordered List Tag</h5>
         My favorite books (in no particular order)
         <ul id="wd-my-books">
           <li>Dune</li>
           <li>Lord of the Rings</li>
-          <li>Ender's Game</li>
+          <li>Ender&apos;s Game</li>
           <li>Red Mars</li>
           <li>The Forever War</li>
         </ul>
@@ -167,15 +168,21 @@ export default function Lab1() {
       <div id="wd-images">
         <h4>Image tag</h4>
         Loading an image from the internet: <br />
-        <img
+        <Image
           id="wd-starship"
-          width="400px"
+          width={400}
+          alt="Starship Image"
           src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
         />
         <br />
         Loading a local image:
         <br />
-        <img id="wd-teslabot" src="/images/teslabot.jpg" height="200px" />
+        <Image
+          id="wd-teslabot"
+          src="/images/teslabot.jpg"
+          alt="Teslabot Image"
+          height={200}
+        />
       </div>
       <div id="wd-forms">
         <h4>Form Elements</h4>
