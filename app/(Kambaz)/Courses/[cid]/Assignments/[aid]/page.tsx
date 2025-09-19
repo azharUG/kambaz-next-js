@@ -130,7 +130,7 @@ export default function AssignmentEditor() {
         </tr>
       </table>
       <hr />
-      <div align="right">
+      <div>
         <button>Cancel</button> <button>Save</button>
       </div>
     </div>
