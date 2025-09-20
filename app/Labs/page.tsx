@@ -2,6 +2,7 @@ import Link from "next/link";
 export default function Labs() {
   return (
     <div id="wd-labs">
+      <h1>Azhar Abdulla, Section: 01, CS4550</h1>
       <h1>Labs</h1>
       <ul>
         <li>

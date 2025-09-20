@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 export default function Lab1() {
   return (
     <div id="wd-lab1">
@@ -168,20 +167,20 @@ export default function Lab1() {
       <div id="wd-images">
         <h4>Image tag</h4>
         Loading an image from the internet: <br />
-        <Image
+        <img
           id="wd-starship"
-          width={400}
+          width="400px"
           alt="Starship Image"
           src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
         />
         <br />
         Loading a local image:
         <br />
-        <Image
+        <img
           id="wd-teslabot"
           src="/images/teslabot.jpg"
           alt="Teslabot Image"
-          height={200}
+          height="200px"
         />
       </div>
       <div id="wd-forms">
@@ -314,13 +313,13 @@ export default function Lab1() {
         <option value="FANTASY"> Fantasy </option>
       </select>
       <h4>Anchor tag</h4>
-      Please
+      Please{" "}
       <a href="https://www.lipsum.com" id="wd-lipsum">
         click here
-      </a>
+      </a>{" "}
       to get dummy text
       <br />
-      <a href="https://github.com/azharUG" id="wd-github">
+      <a href="https://github.com/azharUG/kambaz-next-js" id="wd-github">
         My github repo
       </a>
       <br />
