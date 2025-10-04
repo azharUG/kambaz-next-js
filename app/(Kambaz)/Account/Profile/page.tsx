@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { Form, FormControl, FormSelect, Button } from "react-bootstrap";
+import {
+  Form,
+  FormControl,
+  FormSelect,
+  Button,
+  InputGroup,
+} from "react-bootstrap";
+import InputGroupText from "react-bootstrap/esm/InputGroupText";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function Profile() {
   return (
@@ -37,7 +45,12 @@ export default function Profile() {
         />
 
         {/* Date of Birth */}
-        <FormControl className="mb-2" type="date" defaultValue="2000-01-01" />
+        <InputGroup className="mb-2">
+          <FormControl type="date" defaultValue="2000-01-01" />
+          <InputGroupText>
+            <FaRegCalendarAlt />
+          </InputGroupText>
+        </InputGroup>
 
         {/* Email */}
         <FormControl

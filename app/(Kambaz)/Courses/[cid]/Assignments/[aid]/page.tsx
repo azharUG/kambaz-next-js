@@ -7,58 +7,54 @@ import {
   Row,
   Col,
   Button,
+  InputGroup,
 } from "react-bootstrap";
+import InputGroupText from "react-bootstrap/esm/InputGroupText";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor" className="p-3">
       <Form>
         {/* Assignment Name */}
-        <Row className="mb-3">
-          <FormLabel column sm={2}>
-            Assignment Name
-          </FormLabel>
-          <Col sm={10}>
-            <FormControl type="text" defaultValue="A1 - ENV + HTML" />
-          </Col>
-        </Row>
-
+        <Row className="mb-4">Assignment Name</Row>
         <Row className="mb-4">
-          <Col sm={{ span: 10, offset: 2 }}>
-            <FormControl
-              as="textarea"
-              rows={8}
-              defaultValue={`The assignment is available online
+          <FormControl type="text" defaultValue="A1 - ENV + HTML" />
+        </Row>
+        <Row className="mb-4">
+          <FormControl
+            as="textarea"
+            rows={8}
+            defaultValue={`The assignment is available online
 
-              Submit a link to the landing page of your Web application running on Netlify.
+Submit a link to the landing page of your Web application running on Netlify.
 
-              The landing page should include the following:
-              - Your full name and section
-              - Links to each of the lab assignments
-              - Link to the Kanbas application
-              - Links to all relevant source code repositories
+The landing page should include the following:
+- Your full name and section
+- Links to each of the lab assignments
+- Link to the Kanbas application
+- Links to all relevant source code repositories
 
-              The Kanbas application should include a link to navigate back to the landing page.`}
-            />
-          </Col>
+The Kanbas application should include a link to navigate back to the landing page.`}
+          />
         </Row>
 
         {/* Points */}
-        <Row className="mb-3">
-          <FormLabel column sm={2}>
+        <Row className="mb-4">
+          <FormLabel column sm={2} className="text-end">
             Points
           </FormLabel>
-          <Col sm={4}>
+          <Col sm={10}>
             <FormControl type="number" defaultValue={100} />
           </Col>
         </Row>
 
         {/* Assignment Group */}
-        <Row className="mb-3">
-          <FormLabel column sm={2}>
+        <Row className="mb-4">
+          <FormLabel column sm={2} className="text-end">
             Assignment Group
           </FormLabel>
-          <Col sm={4}>
+          <Col sm={10}>
             <FormSelect defaultValue="ASSIGNMENTS">
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
               <option value="QUIZZES">QUIZZES</option>
@@ -69,11 +65,11 @@ export default function AssignmentEditor() {
         </Row>
 
         {/* Display Grade As */}
-        <Row className="mb-3">
-          <FormLabel column sm={2}>
+        <Row className="mb-4">
+          <FormLabel column sm={2} className="text-end">
             Display Grade as
           </FormLabel>
-          <Col sm={4}>
+          <Col sm={10}>
             <FormSelect defaultValue="Percentage">
               <option value="Percentage">Percentage</option>
               <option value="Decimal">Decimal</option>
@@ -84,7 +80,7 @@ export default function AssignmentEditor() {
 
         {/* Submission Type - Boxed */}
         <Row className="mb-4">
-          <FormLabel column sm={2}>
+          <FormLabel column sm={2} className="text-end">
             Submission Type
           </FormLabel>
           <Col sm={10}>
@@ -94,13 +90,34 @@ export default function AssignmentEditor() {
                 <option value="In-person">In-person</option>
               </FormSelect>
 
-              <FormLabel>Online Entry Options</FormLabel>
+              <FormLabel className="fw-bold">Online Entry Options</FormLabel>
               <div>
-                <FormCheck type="checkbox" label="Text Entry" />
-                <FormCheck type="checkbox" label="Website URL" defaultChecked />
-                <FormCheck type="checkbox" label="Media Recordings" />
-                <FormCheck type="checkbox" label="Student Annotation" />
-                <FormCheck type="checkbox" label="File Uploads" />
+                <FormCheck
+                  type="checkbox"
+                  label="Text Entry"
+                  className="mb-3"
+                />
+                <FormCheck
+                  type="checkbox"
+                  label="Website URL"
+                  className="mb-3"
+                  defaultChecked
+                />
+                <FormCheck
+                  type="checkbox"
+                  label="Media Recordings"
+                  className="mb-3"
+                />
+                <FormCheck
+                  type="checkbox"
+                  label="Student Annotation"
+                  className="mb-3"
+                />
+                <FormCheck
+                  type="checkbox"
+                  label="File Uploads"
+                  className="mb-3"
+                />
               </div>
             </div>
           </Col>
@@ -108,39 +125,53 @@ export default function AssignmentEditor() {
 
         {/* Assign - Boxed */}
         <Row className="mb-4">
-          <FormLabel column sm={2}>
+          <FormLabel column sm={2} className="text-end">
             Assign
           </FormLabel>
           <Col sm={10}>
             <div className="border p-3 rounded">
-              <FormLabel>Assign to</FormLabel>
+              <FormLabel className="fw-bold">Assign to</FormLabel>
               <FormControl
                 className="mb-3"
                 type="text"
                 defaultValue="Everyone"
               />
 
-              <FormLabel>Due</FormLabel>
-              <FormControl
-                className="mb-3"
-                type="datetime-local"
-                defaultValue="2024-05-13T23:59"
-              />
+              <FormLabel className="fw-bold">Due</FormLabel>
+              <InputGroup className="mb-3">
+                <FormControl
+                  type="datetime-local"
+                  defaultValue="2024-05-13T23:59"
+                />
+                <InputGroupText>
+                  <FaRegCalendarAlt />
+                </InputGroupText>
+              </InputGroup>
 
               <Row>
                 <Col sm={6}>
-                  <FormLabel>Available from</FormLabel>
-                  <FormControl
-                    type="datetime-local"
-                    defaultValue="2024-05-06T00:00"
-                  />
+                  <FormLabel className="fw-bold">Available from</FormLabel>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      type="datetime-local"
+                      defaultValue="2024-05-06T00:00"
+                    />
+                    <InputGroupText>
+                      <FaRegCalendarAlt />
+                    </InputGroupText>
+                  </InputGroup>
                 </Col>
                 <Col sm={6}>
-                  <FormLabel>Until</FormLabel>
-                  <FormControl
-                    type="datetime-local"
-                    defaultValue="2024-05-20T00:00"
-                  />
+                  <FormLabel className="fw-bold">Until</FormLabel>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      type="datetime-local"
+                      defaultValue="2024-05-20T00:00"
+                    />
+                    <InputGroupText>
+                      <FaRegCalendarAlt />
+                    </InputGroupText>
+                  </InputGroup>
                 </Col>
               </Row>
             </div>

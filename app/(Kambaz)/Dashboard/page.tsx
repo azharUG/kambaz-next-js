@@ -165,7 +165,7 @@ export default function Dashboard() {
               >
                 <CardImg
                   variant="top"
-                  src="/images/mine.jpg"
+                  src="/images/baki.jpg"
                   width="100%"
                   height={160}
                 />
