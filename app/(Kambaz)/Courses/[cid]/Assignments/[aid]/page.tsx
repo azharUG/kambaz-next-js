@@ -1,138 +1,160 @@
+import {
+  Form,
+  FormLabel,
+  FormControl,
+  FormSelect,
+  FormCheck,
+  Row,
+  Col,
+  Button,
+} from "react-bootstrap";
+
 export default function AssignmentEditor() {
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">
-        <strong>Assignment Name</strong>
-      </label>
-      <br /> <br />
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" />
-      <br /> <br />
-      <textarea id="wd-description">
-        The assignment is available online Submit a link to the landing page of
-      </textarea>
-      <br /> <br />
-      <table>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
-          </td>
-          <td>
-            <input id="wd-points" defaultValue={100} />
-          </td>
-        </tr>
+    <div id="wd-assignments-editor" className="p-3">
+      <Form>
+        {/* Assignment Name */}
+        <Row className="mb-3">
+          <FormLabel column sm={2}>
+            Assignment Name
+          </FormLabel>
+          <Col sm={10}>
+            <FormControl type="text" defaultValue="A1 - ENV + HTML" />
+          </Col>
+        </Row>
 
-        <br />
+        <Row className="mb-4">
+          <Col sm={{ span: 10, offset: 2 }}>
+            <FormControl
+              as="textarea"
+              rows={8}
+              defaultValue={`The assignment is available online
 
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-group">Assignment Group</label>
-          </td>
-          <td>
-            <select id="wd-group">
+              Submit a link to the landing page of your Web application running on Netlify.
+
+              The landing page should include the following:
+              - Your full name and section
+              - Links to each of the lab assignments
+              - Link to the Kanbas application
+              - Links to all relevant source code repositories
+
+              The Kanbas application should include a link to navigate back to the landing page.`}
+            />
+          </Col>
+        </Row>
+
+        {/* Points */}
+        <Row className="mb-3">
+          <FormLabel column sm={2}>
+            Points
+          </FormLabel>
+          <Col sm={4}>
+            <FormControl type="number" defaultValue={100} />
+          </Col>
+        </Row>
+
+        {/* Assignment Group */}
+        <Row className="mb-3">
+          <FormLabel column sm={2}>
+            Assignment Group
+          </FormLabel>
+          <Col sm={4}>
+            <FormSelect defaultValue="ASSIGNMENTS">
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
               <option value="QUIZZES">QUIZZES</option>
               <option value="EXAMS">EXAMS</option>
               <option value="PROJECT">PROJECT</option>
-            </select>
-          </td>
-        </tr>
+            </FormSelect>
+          </Col>
+        </Row>
 
-        <br />
-
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-display-grade-as">Display Grade as</label>
-          </td>
-          <td>
-            <select id="wd-display-grade-as">
+        {/* Display Grade As */}
+        <Row className="mb-3">
+          <FormLabel column sm={2}>
+            Display Grade as
+          </FormLabel>
+          <Col sm={4}>
+            <FormSelect defaultValue="Percentage">
               <option value="Percentage">Percentage</option>
               <option value="Decimal">Decimal</option>
               <option value="Fraction">Fraction</option>
-            </select>
-          </td>
-        </tr>
+            </FormSelect>
+          </Col>
+        </Row>
 
-        <br />
+        {/* Submission Type - Boxed */}
+        <Row className="mb-4">
+          <FormLabel column sm={2}>
+            Submission Type
+          </FormLabel>
+          <Col sm={10}>
+            <div className="border p-3 rounded">
+              <FormSelect className="mb-3" defaultValue="Online">
+                <option value="Online">Online</option>
+                <option value="In-person">In-person</option>
+              </FormSelect>
 
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-submission-type">Submission Type</label>
-          </td>
-          <td>
-            <select id="wd-submission-type">
-              <option value="Online">Online</option>
-              <option value="In-person">In-person</option>
-            </select>
-            <br /> <br />
-            <label>Online Entry Options</label>
-            <br />
-            <input type="checkbox" name="check-entry" id="wd-text-entry" />
-            <label htmlFor="wd-text-entry"> Text Entry</label>
-            <br />
-            <input type="checkbox" name="check-entry" id="wd-website-url" />
-            <label htmlFor="wd-website-url"> Website URL</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-entry"
-              id="wd-media-recordings"
-            />
-            <label htmlFor="wd-media-recordings"> Media Recordings</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-entry"
-              id="wd-student-annotation"
-            />
-            <label htmlFor="wd-student-annotation"> Student Annotation</label>
-            <br />
-            <input type="checkbox" name="check-entry" id="wd-file-upload" />
-            <label htmlFor="wd-file-upload"> File Uploads</label>
-          </td>
-        </tr>
+              <FormLabel>Online Entry Options</FormLabel>
+              <div>
+                <FormCheck type="checkbox" label="Text Entry" />
+                <FormCheck type="checkbox" label="Website URL" defaultChecked />
+                <FormCheck type="checkbox" label="Media Recordings" />
+                <FormCheck type="checkbox" label="Student Annotation" />
+                <FormCheck type="checkbox" label="File Uploads" />
+              </div>
+            </div>
+          </Col>
+        </Row>
 
-        <br />
+        {/* Assign - Boxed */}
+        <Row className="mb-4">
+          <FormLabel column sm={2}>
+            Assign
+          </FormLabel>
+          <Col sm={10}>
+            <div className="border p-3 rounded">
+              <FormLabel>Assign to</FormLabel>
+              <FormControl
+                className="mb-3"
+                type="text"
+                defaultValue="Everyone"
+              />
 
-        <tr>
-          <td align="right" valign="top">
-            <label>Assign</label>
-          </td>
-          <td>
-            <label htmlFor="wd-assign-to">Assign to</label> <br />
-            <input type="text" defaultValue={"Everyone"} id="wd-assign-to" />
-            <br /> <br />
-            <label htmlFor="wd-due-date">Due</label> <br />
-            <input type="date" value="2024-05-13" id="wd-due-date" />
-            <br /> <br />
-            <table>
-              <tr>
-                <td>
-                  <label htmlFor="wd-available-from">Available from</label>
-                  <br />
-                  <input
-                    type="date"
-                    value="2024-05-06"
-                    id="wd-available-from"
+              <FormLabel>Due</FormLabel>
+              <FormControl
+                className="mb-3"
+                type="datetime-local"
+                defaultValue="2024-05-13T23:59"
+              />
+
+              <Row>
+                <Col sm={6}>
+                  <FormLabel>Available from</FormLabel>
+                  <FormControl
+                    type="datetime-local"
+                    defaultValue="2024-05-06T00:00"
                   />
-                </td>
-                <td>
-                  <label htmlFor="wd-available-until">Until</label>
-                  <br />
-                  <input
-                    type="date"
-                    value="2024-05-20"
-                    id="wd-available-until"
+                </Col>
+                <Col sm={6}>
+                  <FormLabel>Until</FormLabel>
+                  <FormControl
+                    type="datetime-local"
+                    defaultValue="2024-05-20T00:00"
                   />
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-      <hr />
-      <div>
-        <button>Cancel</button> <button>Save</button>
-      </div>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
+
+        <hr />
+
+        {/* Action Buttons */}
+        <div className="d-flex justify-content-end gap-2 mt-4">
+          <Button variant="secondary">Cancel</Button>
+          <Button variant="danger">Save</Button>
+        </div>
+      </Form>
     </div>
   );
 }
