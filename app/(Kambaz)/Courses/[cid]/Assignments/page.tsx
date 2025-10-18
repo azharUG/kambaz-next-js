@@ -43,7 +43,10 @@ export default function Assignments() {
         {assignments
           .filter((assignment: any) => assignment.course === cid)
           .map((assignment: any, index: number) => (
-            <ListGroupItem className="wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center">
+            <ListGroupItem
+              key={assignment._id}
+              className="wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center"
+            >
               <div className="d-flex align-items-center flex-grow-1 me-5">
                 <BsGripVertical className="me-2 fs-3" />
                 <BsPencilSquare className="me-4 text-success" />
