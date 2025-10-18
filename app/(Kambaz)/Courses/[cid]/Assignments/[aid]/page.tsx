@@ -1,3 +1,8 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import * as db from "../../../../Database";
 import {
   Form,
   FormLabel,
@@ -13,14 +18,26 @@ import InputGroupText from "react-bootstrap/esm/InputGroupText";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a: any) => a._id === aid);
+
+  if (!assignment) {
+    return <div className="p-3">Assignment not found.</div>;
+  }
+
   return (
     <div id="wd-assignments-editor" className="p-3">
+      {/* Assignment title header */}
+      <h4 className="fw-bold mb-4">{assignment.title}</h4>
+
       <Form>
         {/* Assignment Name */}
-        <Row className="mb-4">Assignment Name</Row>
         <Row className="mb-4">
-          <FormControl type="text" defaultValue="A1 - ENV + HTML" />
+          <FormLabel>Assignment Name</FormLabel>
+          <FormControl type="text" defaultValue={assignment.title} />
         </Row>
+
+        {/* Description - fixed text */}
         <Row className="mb-4">
           <FormControl
             as="textarea"
@@ -78,7 +95,7 @@ The Kanbas application should include a link to navigate back to the landing pag
           </Col>
         </Row>
 
-        {/* Submission Type - Boxed */}
+        {/* Submission Type - fixed section */}
         <Row className="mb-4">
           <FormLabel column sm={2} className="text-end">
             Submission Type
@@ -123,7 +140,7 @@ The Kanbas application should include a link to navigate back to the landing pag
           </Col>
         </Row>
 
-        {/* Assign - Boxed */}
+        {/* Assign - fixed section */}
         <Row className="mb-4">
           <FormLabel column sm={2} className="text-end">
             Assign
@@ -182,8 +199,15 @@ The Kanbas application should include a link to navigate back to the landing pag
 
         {/* Action Buttons */}
         <div className="d-flex justify-content-end gap-2 mt-4">
-          <Button variant="secondary">Cancel</Button>
-          <Button variant="danger">Save</Button>
+          <Link
+            href={`/Courses/${cid}/Assignments`}
+            className="btn btn-secondary"
+          >
+            Cancel
+          </Link>
+          <Link href={`/Courses/${cid}/Assignments`} className="btn btn-danger">
+            Save
+          </Link>
         </div>
       </Form>
     </div>
