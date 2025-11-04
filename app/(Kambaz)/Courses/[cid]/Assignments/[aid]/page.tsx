@@ -1,57 +1,112 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import * as db from "../../../../Database";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Form,
   FormLabel,
   FormControl,
-  FormSelect,
-  FormCheck,
   Row,
   Col,
   InputGroup,
 } from "react-bootstrap";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { updateAssignment } from "../reducer";
+
+function isoToDateTimeLocal(iso: string | null | undefined) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  // convert to local datetime-local string YYYY-MM-DDTHH:mm
+  const tzOffset = d.getTimezoneOffset() * 60000;
+  const local = new Date(d.getTime() - tzOffset);
+  return local.toISOString().slice(0, 16);
+}
+
+function dateTimeLocalToIso(value: string | null | undefined) {
+  if (!value) return null;
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? null : d.toISOString();
+}
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = db.assignments.find((a: any) => a._id === aid);
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { assignments } = useSelector((state: any) =>
+    state.assignmentReducer ? state.assignmentReducer : { assignments: [] }
+  );
+
+  const assignment = assignments.find((a: any) => a._id === aid);
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [points, setPoints] = useState<number | string>(100);
+  const [dueDate, setDueDate] = useState("");
+  const [availableFrom, setAvailableFrom] = useState("");
+  const [availableUntil, setAvailableUntil] = useState("");
+
+  useEffect(() => {
+    if (assignment) {
+      setName(assignment.title || "");
+      setDescription(assignment.description || "");
+      setPoints(assignment.points ?? 0);
+      setDueDate(isoToDateTimeLocal(assignment.dueDate));
+      setAvailableFrom(isoToDateTimeLocal(assignment.availableFrom));
+      setAvailableUntil(isoToDateTimeLocal(assignment.availableUntil));
+    }
+  }, [assignment]);
 
   if (!assignment) {
     return <div className="p-3">Assignment not found.</div>;
   }
+
+  const onSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updated: any = {
+      ...assignment,
+      title: name,
+      description,
+      points: Number(points) || 0,
+      dueDate: dateTimeLocalToIso(dueDate),
+      availableFrom: dateTimeLocalToIso(availableFrom),
+      availableUntil: dateTimeLocalToIso(availableUntil),
+    };
+
+    dispatch(updateAssignment(updated));
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+
+  const onCancel = () => {
+    router.push(`/Courses/${cid}/Assignments`);
+  };
 
   return (
     <div id="wd-assignments-editor" className="p-3">
       {/* Assignment title header */}
       <h4 className="fw-bold mb-4">{assignment.title}</h4>
 
-      <Form>
+      <Form onSubmit={onSave}>
         {/* Assignment Name */}
         <Row className="mb-4">
           <FormLabel>Assignment Name</FormLabel>
-          <FormControl type="text" defaultValue={assignment.title} />
+          <FormControl
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </Row>
 
-        {/* Description - fixed text */}
+        {/* Description */}
         <Row className="mb-4">
           <FormControl
             as="textarea"
             rows={8}
-            defaultValue={`The assignment is available online
-
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following:
-- Your full name and section
-- Links to each of the lab assignments
-- Link to the Kanbas application
-- Links to all relevant source code repositories
-
-The Kanbas application should include a link to navigate back to the landing page.`}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </Row>
 
@@ -61,103 +116,29 @@ The Kanbas application should include a link to navigate back to the landing pag
             Points
           </FormLabel>
           <Col sm={10}>
-            <FormControl type="number" defaultValue={100} />
+            <FormControl
+              type="number"
+              value={points as any}
+              onChange={(e) =>
+                setPoints(e.target.value === "" ? "" : Number(e.target.value))
+              }
+            />
           </Col>
         </Row>
 
-        {/* Assignment Group */}
-        <Row className="mb-4">
-          <FormLabel column sm={2} className="text-end">
-            Assignment Group
-          </FormLabel>
-          <Col sm={10}>
-            <FormSelect defaultValue="ASSIGNMENTS">
-              <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-              <option value="QUIZZES">QUIZZES</option>
-              <option value="EXAMS">EXAMS</option>
-              <option value="PROJECT">PROJECT</option>
-            </FormSelect>
-          </Col>
-        </Row>
-
-        {/* Display Grade As */}
-        <Row className="mb-4">
-          <FormLabel column sm={2} className="text-end">
-            Display Grade as
-          </FormLabel>
-          <Col sm={10}>
-            <FormSelect defaultValue="Percentage">
-              <option value="Percentage">Percentage</option>
-              <option value="Decimal">Decimal</option>
-              <option value="Fraction">Fraction</option>
-            </FormSelect>
-          </Col>
-        </Row>
-
-        {/* Submission Type - fixed section */}
-        <Row className="mb-4">
-          <FormLabel column sm={2} className="text-end">
-            Submission Type
-          </FormLabel>
-          <Col sm={10}>
-            <div className="border p-3 rounded">
-              <FormSelect className="mb-3" defaultValue="Online">
-                <option value="Online">Online</option>
-                <option value="In-person">In-person</option>
-              </FormSelect>
-
-              <FormLabel className="fw-bold">Online Entry Options</FormLabel>
-              <div>
-                <FormCheck
-                  type="checkbox"
-                  label="Text Entry"
-                  className="mb-3"
-                />
-                <FormCheck
-                  type="checkbox"
-                  label="Website URL"
-                  className="mb-3"
-                  defaultChecked
-                />
-                <FormCheck
-                  type="checkbox"
-                  label="Media Recordings"
-                  className="mb-3"
-                />
-                <FormCheck
-                  type="checkbox"
-                  label="Student Annotation"
-                  className="mb-3"
-                />
-                <FormCheck
-                  type="checkbox"
-                  label="File Uploads"
-                  className="mb-3"
-                />
-              </div>
-            </div>
-          </Col>
-        </Row>
-
-        {/* Assign - fixed section */}
+        {/* Assign section */}
         <Row className="mb-4">
           <FormLabel column sm={2} className="text-end">
             Assign
           </FormLabel>
           <Col sm={10}>
             <div className="border p-3 rounded">
-              <FormLabel className="fw-bold">Assign to</FormLabel>
-              <FormControl
-                className="mb-3"
-                type="text"
-                defaultValue="Everyone"
-              />
-
               <FormLabel className="fw-bold">Due</FormLabel>
               <InputGroup className="mb-3">
                 <FormControl
                   type="datetime-local"
-                  defaultValue="2024-05-13T23:59"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
                 />
                 <InputGroupText>
                   <FaRegCalendarAlt />
@@ -170,7 +151,8 @@ The Kanbas application should include a link to navigate back to the landing pag
                   <InputGroup className="mb-3">
                     <FormControl
                       type="datetime-local"
-                      defaultValue="2024-05-06T00:00"
+                      value={availableFrom}
+                      onChange={(e) => setAvailableFrom(e.target.value)}
                     />
                     <InputGroupText>
                       <FaRegCalendarAlt />
@@ -182,7 +164,8 @@ The Kanbas application should include a link to navigate back to the landing pag
                   <InputGroup className="mb-3">
                     <FormControl
                       type="datetime-local"
-                      defaultValue="2024-05-20T00:00"
+                      value={availableUntil}
+                      onChange={(e) => setAvailableUntil(e.target.value)}
                     />
                     <InputGroupText>
                       <FaRegCalendarAlt />
@@ -198,15 +181,16 @@ The Kanbas application should include a link to navigate back to the landing pag
 
         {/* Action Buttons */}
         <div className="d-flex justify-content-end gap-2 mt-4">
-          <Link
-            href={`/Courses/${cid}/Assignments`}
+          <button
+            type="button"
             className="btn btn-secondary"
+            onClick={onCancel}
           >
             Cancel
-          </Link>
-          <Link href={`/Courses/${cid}/Assignments`} className="btn btn-danger">
+          </button>
+          <button type="submit" className="btn btn-danger">
             Save
-          </Link>
+          </button>
         </div>
       </Form>
     </div>

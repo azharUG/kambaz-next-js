@@ -10,13 +10,17 @@ import {
   BsPencilSquare,
   BsThreeDotsVertical,
 } from "react-icons/bs";
+import { FaTrash } from "react-icons/fa";
 import LessonControlButtons from "../Modules/LessonControlButtons";
+import { deleteAssignment } from "./reducer";
 import { useParams } from "next/navigation";
-import * as db from "../../../Database";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const dispatch = useDispatch();
+
   return (
     <div id="wd-assignments">
       <AssignmentControls />
@@ -60,14 +64,31 @@ export default function Assignments() {
 
                   <div>
                     <span className="text-danger">Multiple Modules</span> |{" "}
-                    <strong>Not available until</strong> May 6 at 12:00am |{" "}
-                    <strong>Due</strong> May 13 at 11:59pm | 100 pts
+                    <strong>Due</strong>{" "}
+                    {new Date(assignment.dueDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}{" "}
+                    at 11:59pm | {assignment.points} pts
                   </div>
                 </div>
               </div>
 
               <div className="flex-shrink-0">
                 <LessonControlButtons />
+                <FaTrash
+                  role="button"
+                  className="text-danger ms-3"
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        "Are you sure you want to remove this assignment?"
+                      )
+                    ) {
+                      dispatch(deleteAssignment(assignment._id));
+                    }
+                  }}
+                />
               </div>
             </ListGroupItem>
           ))}

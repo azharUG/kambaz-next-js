@@ -1,11 +1,92 @@
 [
-  { "_id": "A101", "title": "Propulsion Assignment", "course": "RS101" },
-  { "_id": "A102", "title": "Combustion Analysis", "course": "RS101" },
-  { "_id": "A103", "title": "Nozzle Design Project", "course": "RS101" },
-  { "_id": "A201", "title": "Aerodynamics Quiz", "course": "RS102" },
-  { "_id": "A202", "title": "Flow Analysis", "course": "RS102" },
-  { "_id": "A203", "title": "Heating Analysis", "course": "RS102" },
-  { "_id": "A301", "title": "Structural Design Task", "course": "RS103" },
-  { "_id": "A302", "title": "Orbital Calculations", "course": "RS103" },
-  { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" }
+  {
+    "_id": "A101",
+    "title": "Propulsion Assignment",
+    "course": "RS101",
+    "description": "Analyze rocket propulsion fundamentals and thrust equations.",
+    "points": 100,
+    "dueDate": "2025-02-10",
+    "availableFrom": "2025-01-20",
+    "availableUntil": "2025-02-15"
+  },
+  {
+    "_id": "A102",
+    "title": "Combustion Analysis",
+    "course": "RS101",
+    "description": "Evaluate combustion efficiency and fuel performance in engines.",
+    "points": 90,
+    "dueDate": "2025-02-18",
+    "availableFrom": "2025-01-25",
+    "availableUntil": "2025-02-22"
+  },
+  {
+    "_id": "A103",
+    "title": "Nozzle Design Project",
+    "course": "RS101",
+    "description": "Design and optimize a rocket nozzle for maximum exhaust velocity.",
+    "points": 120,
+    "dueDate": "2025-02-28",
+    "availableFrom": "2025-02-01",
+    "availableUntil": "2025-03-05"
+  },
+  {
+    "_id": "A201",
+    "title": "Aerodynamics Quiz",
+    "course": "RS102",
+    "description": "Short quiz on aerodynamic forces and coefficients.",
+    "points": 40,
+    "dueDate": "2025-02-05",
+    "availableFrom": "2025-01-18",
+    "availableUntil": "2025-02-06"
+  },
+  {
+    "_id": "A202",
+    "title": "Flow Analysis",
+    "course": "RS102",
+    "description": "Analyze compressible and incompressible flow conditions.",
+    "points": 80,
+    "dueDate": "2025-02-15",
+    "availableFrom": "2025-01-22",
+    "availableUntil": "2025-02-20"
+  },
+  {
+    "_id": "A203",
+    "title": "Heating Analysis",
+    "course": "RS102",
+    "description": "Study aerodynamic heating on high-speed vehicles.",
+    "points": 85,
+    "dueDate": "2025-03-01",
+    "availableFrom": "2025-02-01",
+    "availableUntil": "2025-03-06"
+  },
+  {
+    "_id": "A301",
+    "title": "Structural Design Task",
+    "course": "RS103",
+    "description": "Evaluate structural loads and design spacecraft frame components.",
+    "points": 110,
+    "dueDate": "2025-02-12",
+    "availableFrom": "2025-01-25",
+    "availableUntil": "2025-02-17"
+  },
+  {
+    "_id": "A302",
+    "title": "Orbital Calculations",
+    "course": "RS103",
+    "description": "Perform orbital mechanics calculations for satellite missions.",
+    "points": 95,
+    "dueDate": "2025-02-25",
+    "availableFrom": "2025-02-01",
+    "availableUntil": "2025-03-02"
+  },
+  {
+    "_id": "A303",
+    "title": "Systems Engineering Exam",
+    "course": "RS103",
+    "description": "Exam covering systems engineering principles and lifecycle management.",
+    "points": 150,
+    "dueDate": "2025-03-10",
+    "availableFrom": "2025-02-10",
+    "availableUntil": "2025-03-12"
+  }
 ]

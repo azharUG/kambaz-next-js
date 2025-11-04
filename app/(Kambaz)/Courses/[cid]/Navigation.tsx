@@ -25,7 +25,7 @@ export default function CourseNavigation() {
 
         return (
           <Link
-            key={link}
+            key={href}
             href={href}
             id={`wd-course-${link.toLowerCase()}-link`}
             className={
