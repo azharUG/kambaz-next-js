@@ -1,9 +1,10 @@
 import { ListGroupItem, Button, FormControl } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, updateTodo, setTodo } from "./todosReducer";
+import { RootState } from "../../store";
 
 export default function TodoForm() {
-  const { todo } = useSelector((state: any) => state.todosReducer);
+  const { todo } = useSelector((state: RootState) => state.todosReducer);
   const dispatch = useDispatch();
   return (
     <ListGroupItem className="d-flex gap-2">
