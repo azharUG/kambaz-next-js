@@ -12,14 +12,26 @@ import {
 } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import LessonControlButtons from "../Modules/LessonControlButtons";
-import { deleteAssignment } from "./reducer";
 import { useParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import * as client from "./client";
+import { setAssignments } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
   const { assignments } = useSelector((state: any) => state.assignmentReducer);
   const dispatch = useDispatch();
+
+  const fetchAssignments = async () => {
+    if (!cid) return;
+    const list = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(list));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [cid]);
 
   return (
     <div id="wd-assignments">
@@ -79,13 +91,20 @@ export default function Assignments() {
                 <FaTrash
                   role="button"
                   className="text-danger ms-3"
-                  onClick={() => {
+                  onClick={async () => {
                     if (
                       window.confirm(
                         "Are you sure you want to remove this assignment?"
                       )
                     ) {
-                      dispatch(deleteAssignment(assignment._id));
+                      await client.deleteAssignment(assignment._id);
+                      dispatch(
+                        setAssignments(
+                          assignments.filter(
+                            (m: any) => m._id !== assignment._id
+                          )
+                        )
+                      );
                     }
                   }}
                 />

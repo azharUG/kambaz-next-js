@@ -53,13 +53,32 @@ export default function TOC() {
         </NavLink>
       </NavItem>
       <NavItem>
+        <NavLink
+          href="/Labs/Lab5"
+          as={Link}
+          className={`nav-link ${pathname.endsWith("Lab5") ? "active" : ""}`}
+        >
+          Lab 5
+        </NavLink>
+      </NavItem>
+      <NavItem>
         <NavLink href="/" as={Link}>
           Kambaz
         </NavLink>
       </NavItem>
       <NavItem>
         <NavLink href="https://github.com/azharUG/kambaz-next-js">
-          My GitHub
+          Frontend Github
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="https://github.com/azharUG/kambaz-node-server-app">
+          Backend Github
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="https://kambaz-node-server-app-e0og.onrender.com">
+          Server Root
         </NavLink>
       </NavItem>
     </Nav>

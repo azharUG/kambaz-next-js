@@ -14,6 +14,7 @@ import {
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { updateAssignment } from "../reducer";
+import * as client from "../client";
 
 function isoToDateTimeLocal(iso: string | null | undefined) {
   if (!iso) return "";
@@ -76,8 +77,11 @@ export default function AssignmentEditor() {
       availableUntil: dateTimeLocalToIso(availableUntil),
     };
 
-    dispatch(updateAssignment(updated));
-    router.push(`/Courses/${cid}/Assignments`);
+    (async () => {
+      const saved = await client.updateAssignment(updated);
+      dispatch(updateAssignment(saved));
+      router.push(`/Courses/${cid}/Assignments`);
+    })();
   };
 
   const onCancel = () => {

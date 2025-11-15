@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { addAssignment } from "../reducer";
+import { setAssignments } from "../reducer";
+import * as client from "../client";
 
 export default function AssignmentEditorNew() {
   const router = useRouter();
@@ -36,8 +37,24 @@ export default function AssignmentEditorNew() {
       course: cid,
     };
 
-    dispatch(addAssignment(payload));
-    router.push(`/Courses/${cid}/Assignments`);
+    (async () => {
+      const created = await client.createAssignmentForCourse(cid as string, {
+        title: payload.name,
+        description: payload.description,
+        points: payload.points,
+        dueDate: payload.dueDate,
+        availableFrom: payload.availableFrom,
+        availableUntil: payload.availableUntil,
+        course: payload.course,
+      });
+      // append created assignment to store
+      // read current assignments from state by dispatching setAssignments with previous + created
+      // we don't have direct access to current state here; simple approach: push to reducer via addAssignment would create local id
+      // instead, fetch fresh list from server and set it
+      const list = await client.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(list));
+      router.push(`/Courses/${cid}/Assignments`);
+    })();
   };
 
   const onCancel = () => {
