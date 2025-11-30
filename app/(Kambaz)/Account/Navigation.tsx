@@ -5,8 +5,8 @@ import { Nav, NavItem, NavLink } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 export default function AccountNavigation() {
-  const { currentUser } = useSelector(
-    (state: RootState) => state.accountReducer
+  const currentUser = useSelector(
+    (state: RootState) => state.accountReducer.currentUser as any
   );
   const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
   const pathname = usePathname();
@@ -27,6 +27,21 @@ export default function AccountNavigation() {
           </NavLink>
         </NavItem>
       ))}
+      {currentUser && currentUser.role === "ADMIN" && (
+        <NavItem className="wd list-group fs-5 rounded-0">
+          <NavLink
+            as={Link}
+            href={`/Account/Users`}
+            className={
+              pathname.endsWith("Users")
+                ? "list-group-item border-0 text-danger active"
+                : "list-group-item border-0 text-danger"
+            }
+          >
+            Users
+          </NavLink>
+        </NavItem>
+      )}
     </Nav>
   );
 }
