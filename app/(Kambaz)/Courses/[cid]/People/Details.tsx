@@ -25,7 +25,6 @@ export default function PeopleDetails({
   useEffect(() => {
     if (uid) fetchUser();
   }, [uid]);
-  if (!uid) return null;
 
   const deleteUser = async (uid: string) => {
     await client.deleteUser(uid);
@@ -44,6 +43,8 @@ export default function PeopleDetails({
       setRoleSel(user.role || "");
     }
   }, [user]);
+  if (!uid) return null;
+
   const saveUser = async () => {
     const [firstName, lastName] = name.split(" ");
     const updatedUser = { ...user, firstName, lastName, email, role: roleSel };
