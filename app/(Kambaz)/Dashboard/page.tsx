@@ -99,8 +99,9 @@ export default function Dashboard() {
 
   const handleEnroll = async (courseId: string) => {
     try {
-      await enrollClient.enrollCurrentUser(courseId);
+      await client.enrollIntoCourse((currentUser as any)?._id, courseId);
       await fetchEnrollments();
+      await fetchCourses();
     } catch (err) {
       console.error(err);
       // optimistic local fallback
@@ -110,8 +111,10 @@ export default function Dashboard() {
 
   const handleUnenroll = async (courseId: string) => {
     try {
-      await enrollClient.unenrollCurrentUser(courseId);
+      // Use the user-specific client endpoint so the server removes the enrollment
+      await client.unenrollFromCourse((currentUser as any)?._id, courseId);
       await fetchEnrollments();
+      await fetchCourses();
     } catch (err) {
       console.error(err);
       dispatch(unenroll({ user: (currentUser as any)?._id, course: courseId }));
