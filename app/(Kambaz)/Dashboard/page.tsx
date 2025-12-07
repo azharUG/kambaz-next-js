@@ -66,7 +66,22 @@ export default function Dashboard() {
   const fetchEnrollments = async () => {
     try {
       const list = await enrollClient.findEnrollmentsForCurrentUser();
-      dispatch(setEnrollments(list));
+      // server currently returns an array of Course objects for this endpoint
+      // convert to enrollment-shaped objects { _id, user, course } expected by reducer
+      if (
+        Array.isArray(list) &&
+        list.length > 0 &&
+        list[0].course === undefined
+      ) {
+        const mapped = list.map((c: any) => ({
+          _id: `${(currentUser as any)?._id}-${c._id}`,
+          user: (currentUser as any)?._id,
+          course: c._id,
+        }));
+        dispatch(setEnrollments(mapped));
+      } else {
+        dispatch(setEnrollments(list));
+      }
     } catch (err) {
       console.error(err);
     }
