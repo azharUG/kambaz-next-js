@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import * as client from "../../client";
 import { Button, Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 export default function QuizTake() {
   const { cid, qid } = useParams() as any;
@@ -11,6 +12,9 @@ export default function QuizTake() {
   const [questions, setQuestions] = useState<any[]>([]);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [submitted, setSubmitted] = useState<any>(null);
+  const { currentUser } = useSelector(
+    (state: any) => state.accountReducer || { currentUser: null }
+  );
 
   const fetch = async () => {
     try {
@@ -51,6 +55,13 @@ export default function QuizTake() {
   };
 
   if (!quiz) return <div>Loading...</div>;
+
+  // if quiz is unpublished, prevent students from taking it
+  if (!quiz.published && currentUser?.role !== "FACULTY") {
+    return (
+      <div className="alert alert-warning">This quiz is not available.</div>
+    );
+  }
 
   if (submitted) {
     return (

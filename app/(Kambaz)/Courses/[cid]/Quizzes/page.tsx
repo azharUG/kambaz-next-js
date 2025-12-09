@@ -83,7 +83,9 @@ export default function QuizzesList() {
                   <a href={`/Courses/${cid}/Quizzes/${q._id}`}>{q.title}</a>
                 </td>
                 <td>
-                  {q.availableDate && new Date() < new Date(q.availableDate)
+                  {!q.published
+                    ? "Not available"
+                    : q.availableDate && new Date() < new Date(q.availableDate)
                     ? `Not available until ${new Date(
                         q.availableDate
                       ).toLocaleDateString()}`

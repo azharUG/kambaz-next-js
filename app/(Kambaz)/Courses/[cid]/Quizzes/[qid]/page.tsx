@@ -37,10 +37,17 @@ export default function QuizDetails() {
       <p>Points: {quiz.points || 0}</p>
       <p>
         Available:{" "}
-        {quiz.availableDate
+        {!quiz.published
+          ? "Not available"
+          : quiz.availableDate
           ? new Date(quiz.availableDate).toLocaleString()
           : "-"}{" "}
-        until {quiz.untilDate ? new Date(quiz.untilDate).toLocaleString() : "-"}
+        until{" "}
+        {!quiz.published
+          ? "-"
+          : quiz.untilDate
+          ? new Date(quiz.untilDate).toLocaleString()
+          : "-"}
       </p>
       {currentUser && currentUser.role === "FACULTY" && (
         <>
@@ -60,11 +67,22 @@ export default function QuizDetails() {
         </>
       )}
       {currentUser && currentUser.role === "STUDENT" && (
-        <Button
-          onClick={() => router.push(`/Courses/${cid}/Quizzes/${qid}/Take`)}
-        >
-          Take Quiz
-        </Button>
+        <>
+          <Button
+            onClick={() => router.push(`/Courses/${cid}/Quizzes/${qid}/Take`)}
+            disabled={
+              !quiz.published ||
+              (quiz.availableDate &&
+                new Date() < new Date(quiz.availableDate)) ||
+              (quiz.untilDate && new Date() > new Date(quiz.untilDate))
+            }
+          >
+            Take Quiz
+          </Button>
+          {!quiz.published && (
+            <div className="text-warning mt-2">Not available</div>
+          )}
+        </>
       )}
     </div>
   );
